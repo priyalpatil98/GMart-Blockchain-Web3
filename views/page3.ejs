@@ -1,0 +1,60 @@
+<%- include partials/header.ejs %>
+
+<!DOCTYPE html>
+        <html>
+           <head>
+              <title>OSM and Leaflet</title>
+              <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+           </head>
+           <body>
+            <div class="container text-center mt-3">
+               <h1> Addresses of our Stores </h1>
+             </div>
+             <div class="container">
+               <div class="row mt-3">
+                 <div class="col-md-10 mx-auto">
+                   <div class="card bg-light mb-3">
+                     <div class="card-body">
+                    <!--<div class="card-header text-center"><strong>About Us</strong></div>-->
+                       <h4 class="card-title text-center bg-dark text-white">GMart, Dublin 01</h4>
+                       <p><strong>Address:</strong> 23, Dorset Street Lower, Near Spice Rice, Dublin 01</p>
+                       <hr>
+                       <h4 class="card-title text-center bg-dark text-white">GMart, Swords, Dublin</h4>
+                       <p><strong>Address:</strong> 18, Ormond Avenue, Swords, Dublin</p>
+                       <hr>
+                       <h4 class="card-title text-center bg-dark text-white">GMart, Dublin 04</h4>
+                       <p><strong>Address:</strong> 36, Merrion Shopping Centre, Near St. Vincent Hospital, Dublin 4</p>
+                       <hr>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+              <div class="container mt-5 mb-5" id = "map" style = "width: 900px; height: 400px">
+               <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+              <script>
+                 // Creating map options
+                 var mapOptions = {
+                    center: [53.3548, -6.2510],
+                    zoom: 14
+                 }
+                 
+                 // Creating a map object
+                 var map = new L.map('map', mapOptions);
+                 
+                 // Creating a Layer object
+                 var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+                 
+                 // Adding layer to the map
+                 map.addLayer(layer);
+              </script>
+              </div>
+           
+            </body>
+           
+        </html>
+
+<%- include partials/footer.ejs %>
+
+
+        

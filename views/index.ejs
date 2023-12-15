@@ -1,0 +1,103 @@
+<%- include partials/header.ejs %>
+
+<style>
+  /* Make the image fully responsive */
+ 
+  .carousel-inner img {
+    width: 100%;
+    height: 50%;
+    opacity: 0.5;
+  }
+  .carousel-caption {
+  position: absolute;
+  z-index: 1;
+  display:table;
+  width:100%;
+  height:100%;
+  }
+  .trickcenter {
+  position: fixed;
+  top: 84%;
+  left: 50%;
+  color: black;
+  transform: translate(-50%, -50%);
+}
+</style>
+
+<body>
+
+<div id="demo" class="carousel slide" data-ride="carousel">
+<ul class="carousel-indicators">
+<li data-target="#demo" data-slide-to="0" class="active"></li>
+<li data-target="#demo" data-slide-to="1"></li>
+<li data-target="#demo" data-slide-to="2"></li>
+
+
+</ul>
+<div class="carousel-inner">
+<div class="carousel-item active">
+  <img src="https://c1.wallpaperflare.com/preview/572/808/14/shopping-business-retail-shopping-cart.jpg" alt="slide one" width="50" height="50">
+  <div class="carousel-caption trickcenter">
+    <h3><strong>Welcome to Groceries Mart (GMart)!</strong></h3>
+    <p><strong>Pay using your Web3 wallets</strong></p>
+  </div>
+</div>
+<div class="carousel-item">
+  <img src="https://img.freepik.com/free-photo/point-view-customer-supermarket_53876-143000.jpg?size=626&ext=jpg&ga=GA1.1.1673260717.1701605054&semt=sph" alt="slide two" width="50" height="50">
+  <div class="transbox carousel-caption trickcenter">
+    <h3><strong>We are first of our kind to accept cryto for shopping</strong></h3>
+    <p><strong>Pay using secure connection</strong></p>
+  </div>
+</div>
+<div class="carousel-item">
+  <img src="https://img.freepik.com/free-photo/colorful-veggies-frame-with-copy-space_23-2148290738.jpg?size=626&ext=jpg&ga=GA1.1.1673260717.1701605054&semt=sph" alt="slide three" width="50" height="50">
+  <div class="carousel-caption trickcenter">
+    <h3><strong>Welcome to Groceries Mart!</strong></h3>
+    <p><strong>Pay using your Web3 wallets</strong></p>
+  </div>
+</div>
+ 
+</div>
+<a class="carousel-control-prev" href="#demo" data-slide="prev">
+<span class="carousel-control-prev-icon"></span>
+</a>
+<a class="carousel-control-next" href="#demo" data-slide="next">
+<span class="carousel-control-next-icon"></span>
+</a>
+</div>
+
+<!-- <div class="jumbotron">
+  <h1 class="display-4">Welcome to Groceries Mart!</h1>
+  <p class="lead">Pay using your Web3 wallets</p>
+  <hr class="my-4">
+  <p></p>
+  <p class="lead">
+    <a class="btn btn-success btn-lg" href="https://dappradar.com/" role="button">Learn more</a>
+  </p>
+</div> -->
+
+<!-- <% if(name) { %>
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        Hello
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Hi there <%= name %> thanks for joining us today! </h5>
+        <h5 class="card-title">What would you like to purchase today?</h5>
+      </div>
+    </div>
+</div>
+<% } %> 
+
+<div class="container mb-5">
+  <form action="/" method="post">
+    <div class="form-group">
+      <label for="name">Enter Your Name</label>
+      <input type="text" class="form-control" name="name" placeholder="Enter Your Name">
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div> -->
+
+<%- include partials/footer.ejs %>
