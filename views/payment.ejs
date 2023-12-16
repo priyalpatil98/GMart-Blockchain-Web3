@@ -6,54 +6,68 @@
 </head>
 <body>
 
-    <div id="readArea"> <!--Connecting to MetaMask -->
-        <button class="btn btn-success" onclick="connectMetamask()">Connect to Your Metamask Wallet</button>
-        <p id="userArea">Status: Not connected to Metamask</p>
-         <!-- index html to meta-->
-
-        <button class="btn btn-info" onclick="connectContract()">Connect to Contract</button>
-        <p id="contractArea">Status: Not connected to Contract</p>
-        <!-- meta to SC -->
-
-        <button class="btn btn-danger" onclick="getContractAccount()"> Get Contract Address </button>
-        <p id="contractAccount">Contract Account: Not Connected to Contract</p>
-        <!-- CAlling the function designed in Transactions.sol get deployment addresss -->
-
-        <button class="btn btn-secondary" onclick="getBalanceApple()">Get Balance of Contract</button>
-        <p id="balanceArea">Balance: Not Connected to Contract</p>
-        <!-- CAlling the function designed in Transactions.sol get balance -->
-    </div>
-
-    <div id="writeArea"><!-- WRITING TO CONTRACT -->
-        <button class="btn btn-success" onclick="depositContract()">Send ETH to the Contract</button><br>
-        <input type="number" id="depositInput" placeholder="Enter Amount"><br> <br>
-          <!-- Deposit to contract calling on deposit function -->
-
-        <button class="btn btn-danger" onclick="withdraw()">Withdraw ETH To Any Address</button> <br>
-        <input type="text" id="addressInput" placeholder="Enter Address of account you want to send ETH to"> <br>
-        <input type="number" id="amountInput" placeholder="Enter Amount you want to send"> 
-        <!-- CAlling the function designed in Transactions.sol -->
-        <!-- calling the withdraw function -->
-    </div>
-
-<script> //Web3 Functions
+    <script> //Web3 Functions
         
-    let account;
-    const connectMetamask = async () => {
-        if(window.ethereum !== "underfined"){
-            const accounts = await ethereum.request({method: "eth_requestAccounts"});
-            account = accounts[0];
-            document.getElementById("userArea").innerHTML = `User Account: ${account}`;
+        let account;
+        const connectMetamask = async () => {
+            if(window.ethereum !== "underfined"){
+                const accounts = await ethereum.request({method: "eth_requestAccounts"});
+                account = accounts[0];
+                document.getElementById("userArea").innerHTML = `User Account: ${account}`;
+            }
         }
-    }
-
-    const connectContract = async () => {
-        const ABI = [
+    
+        const connectContract = async () => {
+            const ABI = [
 	{
 		"inputs": [],
 		"name": "deposit",
 		"outputs": [],
 		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_address",
+				"type": "string"
+			}
+		],
+		"name": "setUserAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "setUserName",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address payable",
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -83,52 +97,152 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
+		"inputs": [],
+		"name": "getUserAddress",
+		"outputs": [
 			{
-				"internalType": "address payable",
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
+				"internalType": "string",
+				"name": "",
+				"type": "string"
 			}
 		],
-		"name": "withdraw",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getUserName",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "userAddress",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "userName",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	}
 ];
-
-        const Address = "0xa88836707ca511fd0b90c6c9e201b857fbd9e59b"; // Taking Address from Remix 
-        window.web3 = await new Web3(window.ethereum);
-        window.contract = await new window.web3.eth.Contract(ABI, Address);
-        document.getElementById("contractArea").innerHTML = "Connected to Contract"; // calling the elementID above
-}
-
-    const getContractAccount = async () => {
-        const data = await window.contract.methods.getAddress().call();
-        document.getElementById("contractAccount").innerHTML = `Contract Account: ${data}`;
+    
+            const Address = "0xDbFaC523dF9e56950Edfac65FCCE56AcEB4f7eAf"; // Taking Address from Remix 
+            window.web3 = await new Web3(window.ethereum);
+            window.contract = await new window.web3.eth.Contract(ABI, Address);
+            document.getElementById("contractArea").innerHTML = "Connected to Contract"; // calling the elementID above
     }
+    
+        const getContractAccount = async () => {
+            const data = await window.contract.methods.getAddress().call();
+            document.getElementById("contractAccount").innerHTML = `Contract Account: ${data}`;
+        }
+    
+        const getBalanceApple = async () => { // const getBalanceApple is the HTML function & .contract.getBalance is the smart contract function
+            const data = await window.contract.methods.getBalance().call();
+            document.getElementById("balanceArea").innerHTML = `Contract Balance: ${data}`;
+        }
+    
+        const depositContract = async () => {
+            const amount = document.getElementById("depositInput").value;
+            await window.contract.methods.deposit().send({from: account, value: amount});
+            //sendReward()
+        }
+    
+        const withdraw = async () => {
+            const amount = document.getElementById("amountInput").value;
+            const address = document.getElementById("addressInput").value;
+            await window.contract.methods.withdraw(address, amount).send({from: account});
+        }
+    
+        const deliveryFun = async () => {
+            //const name = document.getElementById("nameInput").value;
+            //const deliveryAddress = document.getElementById("deliveryAddress").value;
+            //await window.contract.methods.delivery(deliveryAddress).call();
+            //document.getElementById("details").innerHTML = `Your Details: ${data}, ${data}`;
+			const name = document.getElementById("nameInput").value;
+			console.log(name);
+            const deliveryAddress = document.getElementById("deliveryAddress").value;
+			console.log(deliveryAddress);
+			const response = await window.contract.methods.setUserName(name);
+			console.log(response);
+			await window.contract.methods.setUserAddress(deliveryAddress);
+        }
 
-    const getBalanceApple = async () => { // const getBalanceApple is the HTML function & .contract.getBalance is the smart contract function
-        const data = await window.contract.methods.getBalance().call();
-        document.getElementById("balanceArea").innerHTML = `Contract Balance: ${data}`;
-    }
+		const fetchdata = async () => {
+			const retrievedData = await window.contract.methods.getUserAddress().call();
+			console.log(retrievedData[0]);
+			document.getElementById("details").innerHTML = `Your Details: ${retrievedData}`
+		}
+    
+        // const sendReward = async () => {
+        //     const address = connectMetamask.account;
+        //     await window.contract.methods.distributeReward(address, 200).send({from: account});
+        // }
+    </script>
 
-    const depositContract = async () => {
-        const amount = document.getElementById("depositInput").value;
-        await window.contract.methods.deposit().send({from: account, value: amount});
-    }
+    <div id="readArea"> <!--Connecting to MetaMask -->
+        <button class="btn btn-success" onclick="connectMetamask()">Connect to Your Metamask Wallet</button>
+        <p id="userArea">Status: Not connected to Metamask</p>
+         <!-- index html to meta-->
 
-    const withdraw = async () => {
-        const amount = document.getElementById("amountInput").value;
-        const address = document.getElementById("addressInput").value;
-        await window.contract.methods.withdraw(address, amount).send({from: account});
-    }
-</script>
+        <button class="btn btn-info" onclick="connectContract()">Connect to Contract</button>
+        <p id="contractArea">Status: Not connected to Contract</p>
+        <!-- meta to SC -->
+
+        <button class="btn btn-danger" onclick="getContractAccount()"> Get Contract Address </button>
+        <p id="contractAccount">Contract Account: Not Connected to Contract</p>
+        <!-- CAlling the function designed in Transactions.sol get deployment addresss -->
+
+        <button class="btn btn-secondary" onclick="getBalanceApple()">Get Balance of Contract</button>
+        <p id="balanceArea">Balance: Not Connected to Contract</p>
+        <!-- CAlling the function designed in Transactions.sol get balance -->
+        
+        <h5>Enter Details for Delivery</h5>
+        <input type="text" id="nameInput" placeholder="Enter Your Name"><br>
+        <input type="text" id="deliveryAddress" placeholder="Enter Your Address"><br> <br>
+        <button class="btn btn-secondary" onclick="deliveryFun()">Submit Delivery Address</button>
+        <!-- <p id="details">Your Details: No Details Provided Yet</p> -->
+    </div>
+
+	<button class="btn btn-primary" onclick="fetchdata()">Get Data</button>
+	<p id="details">Your Details: No Details Provided Yet</p>
+
+    <div id="writeArea"><!-- WRITING TO CONTRACT -->
+        <button class="btn btn-success" onclick="depositContract()">Send ETH to the Contract</button><br>
+        <input type="number" id="depositInput" placeholder="Enter Amount"><br> <br>
+          <!-- Deposit to contract calling on deposit function -->
+
+        <button class="btn btn-danger" onclick="withdraw()">Withdraw ETH To Any Address</button> <br>
+        <input type="text" id="addressInput" placeholder="Enter Address of account you want to send ETH to"> <br>
+        <input type="number" id="amountInput" placeholder="Enter Amount you want to send"> 
+        <!-- CAlling the function designed in Transactions.sol -->
+        <!-- calling the withdraw function -->
+    </div>
+
 </body>
 </html>
 
