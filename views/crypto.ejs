@@ -1,0 +1,122 @@
+<%- include partials/header.ejs %>
+
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <style>
+            body {
+                background-image: url("images/coins1.png");
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            #crypto-rates {
+                padding: 20px;
+                background-color: #474d4f;
+                border-radius: 8px;
+                margin-top: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                opacity: 0.9;
+            }
+
+            #crypto-rates2 {
+                padding: 20px;
+                background-color: #474d4f;
+                border-radius: 8px;
+                margin-top: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                opacity: 0.9;
+            }
+
+            .rate {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                font-size: 18px;
+                color: #ffffff;
+            }
+
+            .rate2 {
+                margin-bottom: 10px;
+                font-size: 18px;
+                color: #ffffff;
+            }
+
+            .rate-title {
+                margin-bottom: 10px;
+                text-align: center;
+                color: #ffffff;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="conatiner">
+            <h1 class="text-center mt-3"><strong>Live Crypto Prices</strong></h1>
+        </div>
+        <section class="position-relative py-4 py-xl-5">
+            <div class="container mb-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="crypto-rates">
+                            <h3 class="rate-title">Live Crypto Rates in EUR</h3>
+                            <div id="rates"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="crypto-rates2">
+                            <h3 class="rate-title">Live Crypto Rates in USD</h3>
+                            <div id="rates2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,monero,tether,litecoin,dogecoin&vs_currencies=eur';
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        const ratesDiv = document.getElementById('rates');
+                        ratesDiv.innerHTML = `
+                        <p class="rate">1. Bitcoin (BTC): €${data.bitcoin.eur}</p>
+                        <p class="rate">2. Ethereum (ETH): €${data.ethereum.eur}</p>
+                        <p class="rate">3. Monero (XMR): €${data.monero.eur}</p>
+                        <p class="rate">4. Tether (USDT): €${data.tether.eur}</p>
+                        <p class="rate">5. Litecoin (LTC): €${data.litecoin.eur}</p>
+                        <p class="rate">6. Dogecoin (DOGE): €${data.dogecoin.eur}</p>
+                    `;
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,monero,tether,litecoin,dogecoin&vs_currencies=usd';
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        const ratesDiv = document.getElementById('rates2');
+                        ratesDiv.innerHTML = `
+                  <p class="rate">1. Bitcoin (BTC): $${data.bitcoin.usd}</p>
+                  <p class="rate">2. Ethereum (ETH): $${data.ethereum.usd}</p>
+                  <p class="rate">3. Monero (XMR): $${data.monero.usd}</p>
+                  <p class="rate">4. Tether (USDT): $${data.tether.usd}</p>
+                  <p class="rate">5. Litecoin (LTC): $${data.litecoin.usd}</p>
+                  <p class="rate">6. Dogecoin (DOGE): $${data.dogecoin.usd}</p>
+              `;
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            });
+        </script>
+    </body>
+
+    </html>
+    <%- include partials/footer.ejs %>

@@ -1,0 +1,105 @@
+<%- include partials/header.ejs %>
+
+  <!DOCTYPE html>
+  <html>
+
+  <head>
+    <title>OSM and Leaflet</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  </head>
+
+  <body>
+    <div class="container text-center">
+      <h1 class="mt-3"><strong> Location Of Our Stores </strong></h1>
+      <h5>Do Visit One Of Them for Exiting Offers!</h5>
+      <div class="row my-3">
+        <div class="col-md-6 mt-4 mb-3" id="map" style="width: 1200px; height: 400px">
+          <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+          <script>
+            // Creating map options
+            var mapOptions = {
+              center: [53.3548, -6.2510],
+              zoom: 14
+            }
+
+            // Creating a map object
+            var map = new L.map('map', mapOptions);
+
+            // Creating a Layer object
+            var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+            // Icon options
+            var iconOptions = {
+              iconUrl: '/images/map.png',
+              iconSize: [50, 50]
+            }
+            // Creating a custom icon
+            var customIcon = L.icon(iconOptions);
+
+            // Icon & Icon Caption
+            var markerOptions1 = {
+              title: "Dorset Street",
+              clickable: true,
+              draggable: true,
+              icon: customIcon
+            }
+            var markerOptions2 = {
+              title: "Spencer Dock",
+              clickable: true,
+              draggable: true,
+              icon: customIcon
+            }
+            var markerOptions3 = {
+              title: "Abbey Street",
+              clickable: true,
+              draggable: true,
+              icon: customIcon
+            }
+
+            // Coordinates of Store's Locations in Dublin
+            var marker1 = new L.Marker([53.358579043294824, -6.262148431430695], markerOptions1);
+            var marker2 = new L.Marker([53.3490995182554, -6.239069681982463], markerOptions2);
+            var marker3 = new L.Marker([53.3483551728464, -6.2655587300474425], markerOptions3);
+
+            // Adding layer to the map
+            map.addLayer(layer);
+
+            //Text to display on click
+            marker1.bindPopup('GMart, Dorset Street').openPopup();
+            marker2.bindPopup('GMart, Spencer Dock').openPopup();
+            marker3.bindPopup('GMart, Abbey Street').openPopup();
+
+            // Adding Markers on Map
+            marker1.addTo(map);
+            marker2.addTo(map);
+            marker3.addTo(map);
+
+          </script>
+        </div>
+
+        <div class="col-md-6 text-center mt-3 mb-3">
+          <div class="row mt-3">
+            <div class="col-md-10 mx-auto">
+              <div class="card bg-light mb-3">
+                <div class="card-body">
+                  <h4 class="card-title text-center bg-dark text-white">GMart, Main Office & Store 01</h4>
+                  <p><strong>Address:</strong> 23, Dorset Street Lower, Near Spice Rice, Dublin 01</p>
+                  <hr>
+                  <h4 class="card-title text-center bg-dark text-white">GMart Sales Office & Store 02</h4>
+                  <p><strong>Address:</strong> 18, Spencer Dock, Below National College of Ireland (NCI), Dublin 01</p>
+                  <hr>
+                  <h4 class="card-title text-center bg-dark text-white">GMart Warehouse & Store 03</h4>
+                  <p><strong>Address:</strong> 36, Jervis Shopping Center, Abbey Street Upper, Dublin 01</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </body>
+
+  </html>
+
+  <%- include partials/footer.ejs %>
